@@ -65,5 +65,19 @@ namespace allspice.Repositories
           return reci;
         }, new { id }).FirstOrDefault();
       }
+
+      public void Update(Recipe update)
+      {
+        string sql = @"
+        UPDATE recipes
+        SET
+          title = @Title,
+          subtitle = @Subtitle,
+          category = @Category,
+          picture = @Picture
+        WHERE id = @Id;
+        ";
+        _db.Execute(sql, update);
+      }
   }
 }

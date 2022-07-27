@@ -32,5 +32,24 @@ namespace allspice.Services
       }
       return found;
     }
+
+    internal Recipe Update(Recipe update)
+    {
+      Recipe original = Get(update.Id);
+      if (original == null)
+      {
+        throw new System.Exception("Invalid RecipeId");
+      }
+      if (original.CreatorID != update.CreatorID)
+      {
+        throw new System.Exception("Das Nacho Recipe!");
+      }
+      original.Picture = update.Picture ?? original.Picture;
+      original.Title = update.Title ?? original.Title;
+      original.Subtitle = update.Subtitle ?? original.Subtitle;
+      original.Category = update.Category ?? original.Category;
+      _repo.Update(original);
+      return original;
+    }
   }
 }
