@@ -1,9 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using allspice.Models;
-using allspice.Controllers;
 using allspice.Repositories;
 
 
@@ -20,6 +16,21 @@ namespace allspice.Services
     internal Recipe Create(Recipe recipeData)
     {
       return _repo.Create(recipeData);
+    }
+
+    internal List<Recipe> Get() // method overloading
+    {
+      return _repo.GetAll();
+    }
+
+    internal Recipe Get(int id)
+    {
+      Recipe found = _repo.GetById(id);
+      if (found == null)
+      {
+        throw new System.Exception("Invalid Id");
+      }
+      return found;
     }
   }
 }

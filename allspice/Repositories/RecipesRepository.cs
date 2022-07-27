@@ -1,12 +1,8 @@
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Threading.Tasks;
 using Dapper;
 using allspice.Models;
-using allspice.Services;
-using allspice.Controllers;
 
 
 namespace allspice.Repositories
@@ -26,15 +22,48 @@ namespace allspice.Repositories
       {
         string sql = @"
         INSERT INTO recipes
-        (creatorId, title, subtitle, category, picture)
+          (creatorId, title, subtitle, category, picture)
         VALUES
-        (@CreatorId, @Title, @Subtitle, @Category, @Picture);
+          (@CreatorId, @Title, @Subtitle, @Category, @Picture);
         SELECT LAST_INSERT_ID();
         ";
 
         int id = _db.ExecuteScalar<int>(sql, recipeData);
         recipeData.Id = id;
         return recipeData;
+      }
+
+      public List<Recipe> GetAll()
+      {
+        string sql = @"
+        SELECT
+          a.*,
+          r.*
+        FROM recipes r
+        JOIN accounts a
+          ON a.id = r.creatorId;";
+        return _db.Query<Profile, Recipe, Recipe>(sql, (prof, reci) =>
+        {
+          reci.Creator = prof;
+          return reci;
+        }).ToList();
+      }
+
+      public Recipe GetById(int id)
+      {
+        string sql = @"
+        SELECT
+          a.*,
+          r.*
+        FROM recipes r
+        JOIN accounts a
+          ON a.id = r.creatorId
+        WHERE r.id = @id;";
+        return _db.Query<Profile, Recipe, Recipe>(sql, (prof, reci) =>
+        {
+          reci.Creator = prof;
+          return reci;
+        }, new { id }).FirstOrDefault();
       }
   }
 }

@@ -7,3 +7,16 @@ CREATE TABLE IF NOT EXISTS accounts(
   email varchar(255) COMMENT 'User Email',
   picture varchar(255) COMMENT 'User Picture'
 ) default charset utf8 COMMENT '';
+
+
+SELECT
+        a.*,
+        r.*
+        FROM recipes r
+        JOIN accounts a
+        ON a.id = r.creatorId;
+
+select * from recipes;
+select * from accounts;
+
+delete from recipes;
