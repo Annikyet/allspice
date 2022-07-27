@@ -16,7 +16,3 @@ SELECT
         JOIN accounts a
         ON a.id = r.creatorId;
 
-select * from recipes;
-select * from accounts;
-
-delete from recipes;

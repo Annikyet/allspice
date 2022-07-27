@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace allspice.Models
 {
   public class Recipe
