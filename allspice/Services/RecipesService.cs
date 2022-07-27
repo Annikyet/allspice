@@ -51,5 +51,20 @@ namespace allspice.Services
       _repo.Update(original);
       return original;
     }
+
+    internal int Remove(int recipeId, string userId)
+    {
+      Recipe original = Get(recipeId);
+      if (original == null)
+      {
+        throw new System.Exception("Invalid RecipeId");
+      }
+      if (original.CreatorID != userId)
+      {
+        throw new System.Exception("Das Nacho Recipe!");
+      }
+      _repo.Remove(recipeId);
+      return recipeId;
+    }
   }
 }

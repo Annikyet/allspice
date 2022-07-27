@@ -79,5 +79,15 @@ namespace allspice.Repositories
         ";
         _db.Execute(sql, update);
       }
+
+      public void Remove(int recipeId)
+      {
+        string sql = @"
+        DELETE FROM recipes
+        WHERE id = @recipeId
+        LIMIT 1;
+        ";
+        _db.Execute(sql, new {recipeId});
+      }
   }
 }
